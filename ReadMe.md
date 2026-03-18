@@ -219,6 +219,3 @@ Prabhat Joshi
 
 ---
 
-## 📄 License
-
-This project is developed for educational purposes and can be modified or extended for academic use.
