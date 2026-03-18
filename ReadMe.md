@@ -150,7 +150,7 @@ OnlineExamSystem/
 ### 1. Clone the Repository
 
 ```
-git clone https://github.com/yourusername/online-examination-system.git
+git clone https://github.com/prabhat-joshi-official/Capstone-Project-JAVA.git
 ```
 
 ### 2. Open Project
