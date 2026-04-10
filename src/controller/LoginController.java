@@ -22,6 +22,10 @@ public class LoginController {
         return userDAO.registerUser(user);
     }
 
+    public String getLastRegisterError() {
+        return userDAO.getLastRegisterError();
+    }
+
     public User login(String email, String password) {
         return userDAO.login(email, password);
     }

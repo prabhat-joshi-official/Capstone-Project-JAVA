@@ -150,7 +150,7 @@ public class ModernExamApp extends JFrame {
                     this,
                     registered
                             ? "Registration successful. You can now login."
-                            : "Registration failed. Check if the email already exists and verify your DB credentials (DB_URL, DB_USER, DB_PASSWORD).",
+                            : "Registration failed: " + loginController.getLastRegisterError(),
                     registered ? "Success" : "Error",
                     registered ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
             );
