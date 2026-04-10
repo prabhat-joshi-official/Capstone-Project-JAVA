@@ -114,109 +114,6 @@ public class ModernExamApp extends JFrame {
             roleTitleLabel.setText("admin".equalsIgnoreCase(user.getRole()) ? "Admin Workspace" : "Student Workspace");
             refreshDataModels();
             appCards.show(appContainer, "DASH");
-    private static final Color BACKGROUND = new Color(245, 247, 250);
-    private static final Color CARD = Color.WHITE;
-    private static final Color PRIMARY = new Color(76, 110, 245);
-    private static final Color PRIMARY_DARK = new Color(54, 79, 199);
-    private static final Color TEXT = new Color(33, 37, 41);
-    private static final Font TITLE_FONT = new Font("SansSerif", Font.BOLD, 26);
-    private static final Font BODY_FONT = new Font("SansSerif", Font.PLAIN, 14);
-
-    private final LoginController loginController;
-    private final AdminController adminController;
-    private final ExamController examController;
-    private final ExamDAO examDAO;
-    private final ResultDAO resultDAO;
-
-    private final CardLayout cardLayout;
-    private final JPanel contentPanel;
-
-    private User currentUser;
-
-    public ModernExamApp() {
-        this.loginController = new LoginController();
-        this.adminController = new AdminController();
-        this.examController = new ExamController();
-        this.examDAO = new ExamDAO();
-        this.resultDAO = new ResultDAO();
-
-        setTitle("Online Exam System");
-        setSize(1000, 650);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
-
-        this.cardLayout = new CardLayout();
-        this.contentPanel = new JPanel(cardLayout);
-        contentPanel.setBackground(BACKGROUND);
-
-        contentPanel.add(buildAuthPanel(), "AUTH");
-        contentPanel.add(buildAdminPanel(), "ADMIN");
-        contentPanel.add(buildStudentPanel(), "STUDENT");
-
-        add(contentPanel, BorderLayout.CENTER);
-        cardLayout.show(contentPanel, "AUTH");
-    }
-
-    private JPanel buildAuthPanel() {
-        JPanel root = new JPanel(new GridBagLayout());
-        root.setBackground(BACKGROUND);
-
-        JPanel card = new JPanel(new BorderLayout(0, 20));
-        card.setPreferredSize(new Dimension(440, 500));
-        card.setBorder(new EmptyBorder(30, 30, 30, 30));
-        card.setBackground(CARD);
-
-        JLabel title = new JLabel("Welcome to Online Exam", SwingConstants.CENTER);
-        title.setFont(TITLE_FONT);
-        title.setForeground(TEXT);
-
-        JTabbedPane tabs = new JTabbedPane();
-        tabs.setFont(BODY_FONT);
-
-        tabs.addTab("Login", createLoginTab());
-        tabs.addTab("Register", createRegisterTab());
-
-        card.add(title, BorderLayout.NORTH);
-        card.add(tabs, BorderLayout.CENTER);
-
-        root.add(card);
-        return root;
-    }
-
-    private JPanel createLoginTab() {
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setOpaque(false);
-        GridBagConstraints gbc = baseGbc();
-
-        JTextField emailField = textField();
-        JPasswordField passwordField = passwordField();
-
-        addField(panel, gbc, "Email", emailField, 0);
-        addField(panel, gbc, "Password", passwordField, 2);
-
-        JButton loginBtn = primaryButton("Sign In");
-        gbc.gridy = 4;
-        gbc.gridx = 0;
-        gbc.gridwidth = 2;
-        panel.add(loginBtn, gbc);
-
-        loginBtn.addActionListener(e -> {
-            String email = emailField.getText().trim();
-            String password = new String(passwordField.getPassword());
-
-            User user = loginController.login(email, password);
-            if (user == null) {
-                JOptionPane.showMessageDialog(this, "Invalid credentials.", "Login Failed", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            this.currentUser = user;
-            if ("admin".equalsIgnoreCase(user.getRole())) {
-                cardLayout.show(contentPanel, "ADMIN");
-            } else {
-                cardLayout.show(contentPanel, "STUDENT");
-            }
         });
 
         return panel;
@@ -235,21 +132,6 @@ public class ModernExamApp extends JFrame {
         addFormField(panel, gbc, "Email", emailField, 2);
         addFormField(panel, gbc, "Password", passwordField, 4);
         addFormField(panel, gbc, "Role", roleBox, 6);
-    private JPanel createRegisterTab() {
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setOpaque(false);
-        GridBagConstraints gbc = baseGbc();
-
-        JTextField nameField = textField();
-        JTextField emailField = textField();
-        JPasswordField passwordField = passwordField();
-        JComboBox<String> roleBox = new JComboBox<>(new String[]{"student", "admin"});
-
-        addField(panel, gbc, "Name", nameField, 0);
-        addField(panel, gbc, "Email", emailField, 2);
-        addField(panel, gbc, "Password", passwordField, 4);
-        addField(panel, gbc, "Role", roleBox, 6);
-
         JButton registerBtn = primaryButton("Create Account");
         gbc.gridy = 8;
         gbc.gridx = 0;
