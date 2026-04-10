@@ -15,7 +15,13 @@ public class UserDAO {
         String sql = "INSERT INTO users(name,email,password,role) VALUES(?,?,?,?)";
         lastRegisterError = "";
 
-        try (Connection conn = DBConnection.getConnection();
+        Connection conn = DBConnection.getConnection();
+        if (conn == null) {
+            lastRegisterError = "Could not connect to the database. Check DB_URL, DB_USER, DB_PASSWORD and ensure MySQL is running.";
+            return false;
+        }
+
+        try (Connection ignored = conn;
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             if (conn == null) {
                 lastRegisterError = "Could not connect to the database. Check DB_URL, DB_USER, DB_PASSWORD and ensure MySQL is running.";
